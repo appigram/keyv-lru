@@ -35,12 +35,12 @@ describe('KeyvLru', () => {
 
     test('delete', () => {
       expect.assertions(3);
-      jest.spyOn(sut.cache, 'remove');
+      jest.spyOn(sut.cache, 'delete');
       sut.set('foo', { bar: true });
-      expect(sut.cache).toHaveLength(1);
+      expect(sut.cache.size).toBe(1);
       sut.delete('foo');
-      expect(sut.cache.remove).toHaveBeenCalledWith('foo');
-      expect(sut.cache).toHaveLength(0);
+      expect(sut.cache.delete).toHaveBeenCalledWith('foo');
+      expect(sut.cache.size).toBe(0);
     });
 
     test('clear', () => {
@@ -48,22 +48,10 @@ describe('KeyvLru', () => {
       jest.spyOn(sut.cache, 'clear');
       sut.set('foo', { bar: true });
       sut.set('lorem', { ipsum: 'a!' });
-      expect(sut.cache).toHaveLength(2);
+      expect(sut.cache.size).toBe(2);
       sut.clear();
       expect(sut.cache.clear).toHaveBeenCalled();
-      expect(sut.cache).toHaveLength(0);
+      expect(sut.cache.size).toBe(0);
     });
-  });
-  test('events', done => {
-    expect.assertions(2);
-    const sut = new KeyvLru({ max: 10, notify: true });
-    sut.on('change', (event, serializedCache) => {
-      expect(event).toBe('set');
-      expect(serializedCache).toBe(
-        '{"expire":0,"max":10,"notify":true,"ttl":0,"cache":{"foo":{"next":"","previous":"","value":{"bar":true}}},"expires":{},"first":"foo","last":"foo","length":1}'
-      );
-      done();
-    });
-    sut.set('foo', { bar: true });
   });
 });

@@ -19,7 +19,7 @@
 <h3 id="install">Install</h3>
 <p>Install this module in your project:</p>
 <pre><code>
-npm install keyv-lru
+npm install @appigram/keyv-lru
 </code></pre>
 <h2 id="features">Features</h2>
 <p>This module is based on the <a href="https://www.npmjs.com/package/tiny-lru"><code>tiny-lru</code></a>
@@ -28,7 +28,7 @@ module. This is one of the <a href="https://github.com/dominictarr/bench-lru#res
 <p>Create your Keyv object by executing:</p>
 
 ```js
-const { KeyvLru, KeyvLruManagedTtl } = require('keyv-lru');
+import { KeyvLru, KeyvLruManagedTtl } from '@appigram/keyv-lru';
 
 const options = {
   max: 1000,
@@ -54,10 +54,8 @@ still benefit a lot from the LRU store.</p>
 <h2 id="contributors">Contributors</h2>
 <details>
 <summary><strong>Contributors</strong></summary><br>
-<a title="Engineer and programmer focused on online applications." href="https://github.com/e0ipso">
-  <img align="left" src="https://avatars0.githubusercontent.com/u/1140906?s=24">
-</a>
 <strong>Mateu Aguiló Bosch</strong>
+<strong>Evgeny Sysmanov</strong>
 <br><br>
 </details>
 

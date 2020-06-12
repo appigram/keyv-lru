@@ -24,7 +24,7 @@ class KeyvLruManagedTtl<T> extends KeyvLru {
 
   constructor(options: KeyvLruOptions = { max: 500 }) {
     super(options);
-    this.cache = lru(options.max, options.notify);
+    this.cache = lru(options.max);
   }
 
   get(key: string): ?T {
@@ -64,7 +64,7 @@ class KeyvLruManagedTtl<T> extends KeyvLru {
    */
   evictExpired() {
     // Getting the entries will cause evition on expired entries.
-    Object.keys(this.cache.cache).forEach(this.get.bind(this));
+    this.cache.keys().forEach(this.get.bind(this));
   }
 }
 

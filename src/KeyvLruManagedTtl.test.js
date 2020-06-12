@@ -72,7 +72,7 @@ describe('KeyvLruManagedTtl', () => {
       });
     });
 
-    test('evictExpired', done => {
+    test('evictExpired', (done) => {
       expect.assertions(3);
       jest.spyOn(sut, 'delete');
       sut.cache.set('foo', { data: 'bar', expires: Date.now() + 1000000000 });

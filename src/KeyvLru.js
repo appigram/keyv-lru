@@ -4,9 +4,7 @@ import type { MapInterface } from '../flow/types/MapInterface';
 
 export type KeyvLruOptions = {
   max: number,
-  notify?: boolean,
   ttl?: number,
-  expire?: number,
 };
 
 const lru = require('tiny-lru');
@@ -23,20 +21,7 @@ class KeyvLru extends EventEmitter implements MapInterface {
   constructor(options: KeyvLruOptions = { max: 500 }) {
     super();
     this.defaultTtl = options.ttl;
-    this.cache = lru(
-      options.max,
-      options.notify,
-      this.defaultTtl,
-      options.expire
-    );
-    if (options.notify) {
-      // This seems like a weird construct, but this is because tiny-lru passes
-      // the execution of this.cache.onchange to process.nextTick. nextTick
-      // expects a function.
-      this.cache.onchange = (event, serializedCache) => () => {
-        this.emit('change', event, serializedCache);
-      };
-    }
+    this.cache = lru(options.max, this.defaultTtl);
   }
 
   clear(): void {
@@ -44,7 +29,7 @@ class KeyvLru extends EventEmitter implements MapInterface {
   }
 
   delete(key: string): boolean {
-    const removed = this.cache.remove(key);
+    const removed = this.cache.delete(key);
     return typeof removed !== 'undefined';
   }
 
